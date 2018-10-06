@@ -1,4 +1,5 @@
-sys
-os
+# Python modules imported
+# sys
+# os
 requests
 docopt

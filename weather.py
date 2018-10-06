@@ -19,16 +19,15 @@ from docopt import docopt
 
 
 # create url and get API response (metric values)
-def url_response(api_key, argv):
+def url_response(argv):
 
-    # http://api.openweathermap.org/data/2.5/weather?APPID=a00d264208dce3fd399da20e4d86f25b&q=cambridge
     if "OPENWEATHERMAP_KEY" in os.environ:
         pass
     else:
         print("Error: OPENWEATHERMAP_KEY environment variable is not set")
         raise SystemExit(1)
     base_url = "http://api.openweathermap.org/data/2.5/weather?"
-    key_url = base_url + "APPID=" + api_key + "&q=" + sys.argv[1]
+    key_url = base_url + "APPID=" + os.environ['OPENWEATHERMAP_KEY'] + "&q=" + sys.argv[1]
     country = arguments['--country']
     if country is not None and len(country) > 1:
         complete_url = key_url + "," + country + "&units=metric"
@@ -86,13 +85,6 @@ def api_data(x):
         print("Error 404: City Not Found")
 
 
-#api_key = "a00d264208dce3fd399da20e4d86f25b"
-# city = "Cambridge"
-# x = url_response(city, api_key)
-# api_data(x)
-
-
 if __name__ == '__main__':
     arguments = docopt(__doc__, version="Version 1.0")
-    api_data(url_response('a00d264208dce3fd399da20e4d86f25b', sys.argv[1]))
-    print(arguments)
+    api_data(url_response(sys.argv[1]))
